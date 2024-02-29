@@ -1,0 +1,52 @@
+RISC Project Oberon (2013) Build Summary
+Paul Reed 15.2.2014 rev. B
+
+Pre-requisites
+
+The following are needed to build the RISC Project Oberon (2013) system in the
+form in which it was developed.  This summary assumes familiarity with all 
+relevant software tools and hardware, and their own documentation.
+
+ - Digilent Spartan 3 FPGA Starter Board (200K-gate or 1000K-gate version)
+ - JTAG programming cable
+ - RISC custom daughterboard providing SD-card, network and mouse interface
+ - SD-card, PS/2 keyboard, VGA monitor (>= 1024x768)
+ - PS/2 mouse with 3 buttons (or non-Microsoft with scrollwheel button)
+ - PC running Microsoft Windows or Linux; and Xilinx (e.g. WebPack) ISE software
+   (or Digilent Adept, or Linux xc3sprog if Step 0 not required)
+ - Internet access, in particular to:
+     http://www.inf.ethz.ch/personal/wirth/ProjectOberon
+     http://www.projectoberon.com
+
+Step 0. Synthesize FPGA hardware PROM file (optional, can download instead)
+ - in ISE create new project RISC5 for xc3s200-4ft256 (or xc3s1000)
+ - create sub-folder src/ of RISC5 and copy in SourcesVerilog files
+ - add src/ files to project (except Divider0.v, Multiplier.v and MouseX.v)
+ - cross-compile BootLoad.Mod, or download prom.mem directly, into RISC5 folder
+ - generate programming file (bitfile) RISC5Top.bit (time-consuming)
+ - generate RISC.mcs PROM file from bitfile for xcf02s (or 04s) Platform Flash
+   (using ISE tool iMPACT, assign bitfile to PROM starting at address 0)
+
+Step 1. Build or obtain daughterboard
+ - daughterboard plugs into Spartan board's A2 (middle) 40-pin connector
+ - provides hard disk (SD-card), networking and mouse for Oberon system
+ - soldered at home, or in educational lab, from easily-sourced components
+   (micro-SD-card adapter, tripad board, .1" header etc.)
+ - description and construction notes at http://www.projectoberon.com
+
+Step 2. Plug in hardware and program Platform Flash
+ - ensure Spartan board is powered-off
+ - plug daughterboard into Spartan Board A2 connector
+ - connect VGA monitor & keyboard to Spartan Board, mouse to daughterboard
+ - connect JTAG programming cable between Spartan board and PC
+ - apply power to Spartan board (may run self-test, ignore)
+ - use Xilinx iMPACT boundary scan to assign RISC.mcs to and program PROM
+   (second device on JTAG chain; can also use Digilent Adept, or xc3sprog)
+
+Step 3. Download and write SD-card image, insert, and boot system
+ - download Oberon filesystem image from http://www.projectoberon.com
+ - write raw image (do not simply copy file) to SD-card
+   (Unix/Linux/Mac dd command or a Windows SD-card image raw-writing program)
+ - insert SD-card in daughterboard; verify everything connected
+ - cold-start system by pressing PROG pushbutton on Spartan board
+
